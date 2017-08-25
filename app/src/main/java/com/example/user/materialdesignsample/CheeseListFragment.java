@@ -98,7 +98,6 @@ public class CheeseListFragment extends Fragment {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, CheeseDetailActivity.class);
                     intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
-
                     context.startActivity(intent);
                 }
             });
