@@ -164,6 +164,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
                 startActivityForResult(intent,0);
                 break;
             case R.id.imageView_large:
+                mFab.setVisibility(View.VISIBLE);
                 hideReveal();
                 break;
             case R.id.backdrop:
