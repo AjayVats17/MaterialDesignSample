@@ -1,7 +1,12 @@
 package com.example.user.materialdesignsample;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -14,22 +19,34 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
+    private CoordinatorLayout mCoordinatorLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initUI();
+
+    }
+
+    /**
+     * Initializing Views
+     */
+
+    private void initUI() {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        mCoordinatorLayout=(CoordinatorLayout)findViewById(R.id.main_content);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -57,8 +77,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                showCustomSnackbar();
             }
         });
 
@@ -66,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
     }
+
+    /**
+     * Setting up View Pager
+     */
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
@@ -75,16 +98,59 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    /**
+     * Setting up Drawer Content
+     */
+
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.isChecked()){
+                    menuItem.setChecked(false);
+                }
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
                 return true;
             }
         });
     }
+
+      /*
+     *    Shows a Custom Snackbar
+     */
+
+    private void showCustomSnackbar() {
+        // Create the Snackbar
+        Snackbar snackbar = Snackbar.make(mCoordinatorLayout, "", Snackbar.LENGTH_LONG);
+        // Get the Snackbar's layout view
+        Snackbar.SnackbarLayout layout = (Snackbar.SnackbarLayout) snackbar.getView();
+        // Hide the text
+        TextView textView = layout.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setVisibility(View.INVISIBLE);
+        // Inflate our custom view
+        View snackView = View.inflate(this, R.layout.my_custom_snackbar, null);
+        // Configure the view
+        ImageView imageView = snackView.findViewById(R.id.iv_background);
+        Bitmap image = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        imageView.setImageBitmap(image);
+        TextView textViewTop = snackView.findViewById(R.id.tv_snackbar);
+        textViewTop.setText(getString(R.string.have_a_bite));
+        textViewTop.setTextColor(Color.BLACK);
+
+        // Add the view to the Snackbar's layout
+        layout.addView(snackView, 0);
+
+    /*    // Change the position of snackbar
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)layout.getLayoutParams();
+        params.gravity = Gravity.TOP;
+        layout.setLayoutParams(params);*/
+
+
+        // Show the Snackbar
+        snackbar.show();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,15 +184,19 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.menu_night_mode_system:
+                item.setChecked(true);
                 setNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 break;
             case R.id.menu_night_mode_day:
+                item.setChecked(true);
                 setNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 break;
             case R.id.menu_night_mode_night:
+                item.setChecked(true);
                 setNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 break;
             case R.id.menu_night_mode_auto:
+                item.setChecked(true);
                 setNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
                 break;
         }

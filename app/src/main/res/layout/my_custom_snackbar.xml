@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:orientation="vertical"
+ >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_background"
+        android:src="@drawable/snackbar_background"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/snackbar_background" />
+    <TextView
+        android:id="@+id/tv_snackbar"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/have_a_bite"
+        android:textSize="50sp"/>
+
+</RelativeLayout>
