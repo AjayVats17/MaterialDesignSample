@@ -22,6 +22,8 @@ import java.util.Random;
 
 
 public class CheeseListFragment extends Fragment {
+
+    private Context mContext;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,10 +33,17 @@ public class CheeseListFragment extends Fragment {
         return rv;
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext=context;
+
+    }
+
     private void setupRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                getRandomSublist(Cheeses.sCheeseStrings, 30)));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30)));
     }
 
     private List<String> getRandomSublist(String[] array, int amount) {
@@ -50,7 +59,7 @@ public class CheeseListFragment extends Fragment {
             extends RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder> {
 
         private final TypedValue mTypedValue = new TypedValue();
-        private int mBackground;
+//        private int mBackground;
         private List<String> mValues;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
@@ -75,7 +84,7 @@ public class CheeseListFragment extends Fragment {
 
         SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-            mBackground = mTypedValue.resourceId;
+//            mBackground = mTypedValue.resourceId;
             mValues = items;
         }
 
@@ -83,7 +92,7 @@ public class CheeseListFragment extends Fragment {
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_item, parent, false);
-            view.setBackgroundResource(mBackground);
+//            view.setBackgroundResource(mBackground);
             return new ViewHolder(view);
         }
 

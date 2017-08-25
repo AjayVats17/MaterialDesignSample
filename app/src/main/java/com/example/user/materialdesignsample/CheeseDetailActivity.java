@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     private FloatingActionButton mFab;
 
     private int mRandomCheese;
+    private Button mBtnOk;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -45,6 +47,9 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         final String cheeseName = intent.getStringExtra(EXTRA_NAME);
         mImageViewSmall = (ImageView) findViewById(R.id.backdrop);
         mImageViewLarge = (ImageView) findViewById(R.id.imageView_large);
+
+        mBtnOk=(Button)findViewById(R.id.button_ok);
+        mBtnOk.setOnClickListener(this);
 
         mFab=(FloatingActionButton)findViewById(R.id.fab);
         mFab.setOnClickListener(this);
@@ -161,7 +166,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
                 Intent intent = new Intent("android.intent.action.VIEW");
                 Uri data = Uri.parse("sms:");
                 intent.setData(data);
-                startActivityForResult(intent,0);
+                startActivity(intent);
                 break;
             case R.id.imageView_large:
                 mFab.setVisibility(View.VISIBLE);
@@ -171,6 +176,8 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
                 Glide.with(CheeseDetailActivity.this).load(mRandomCheese).centerCrop().into(mImageViewLarge);
                 mFab.setVisibility(View.GONE);
                 showReveal();
+                break;
+            case R.id.button_ok:
                 break;
             default:
                 Log.e(TAG, getString(R.string.wrong_case_selection));
