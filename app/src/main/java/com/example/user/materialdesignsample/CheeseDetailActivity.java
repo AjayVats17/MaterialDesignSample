@@ -113,8 +113,8 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         View myView = findViewById(R.id.imageView_large);
 
      // get the center for the clipping circle
-        int cx = myView.getWidth() / 2;
-        int cy = myView.getHeight() / 2;
+        int cx = myView.getWidth();
+        int cy = myView.getHeight();
 
      // get the final radius for the clipping circle
         float finalRadius = (float) Math.hypot(cx, cy);
@@ -133,8 +133,8 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         final View myView = findViewById(R.id.imageView_large);
 
      // get the center for the clipping circle
-        int cx = myView.getWidth() / 2;
-        int cy = myView.getHeight() / 2;
+        int cx = myView.getWidth();
+        int cy = myView.getHeight();
 
      // get the initial radius for the clipping circle
         float initialRadius = (float) Math.hypot(cx, cy);
@@ -184,5 +184,4 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
-
 }
