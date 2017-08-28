@@ -19,10 +19,15 @@ import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.transition.Slide;
+import android.transition.Visibility;
+import android.view.Gravity;
+
 
 import com.bumptech.glide.Glide;
 import com.example.user.materialdesignsample.Models.Cheeses;
 import com.example.user.materialdesignsample.R;
+
 
 public class CheeseDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,6 +49,9 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheese_detail);
         // set an exit transition
+
+        Visibility transition = buildEnterTransition();
+        getWindow().setEnterTransition(transition);
 
         Intent intent = getIntent();
         final String cheeseName = intent.getStringExtra(EXTRA_NAME);
@@ -84,6 +92,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.isChecked()){
@@ -91,7 +100,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         }
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                finishAfterTransition();
                 return true;
             case R.id.settings:
                 item.setChecked(true);
@@ -185,7 +194,6 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
@@ -195,5 +203,13 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         else{
             finish();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private Visibility buildEnterTransition() {
+        Slide enterTransition = new Slide();
+        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_long));
+        enterTransition.setSlideEdge(Gravity.RIGHT);
+        return enterTransition;
     }
 }
