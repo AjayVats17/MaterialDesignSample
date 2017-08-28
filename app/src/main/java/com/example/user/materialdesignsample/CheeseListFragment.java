@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -72,14 +73,17 @@ public class CheeseListFragment extends Fragment {
             String mBoundString;
 
             final View mView;
+            final CardView mCardView;
             final ImageView mImageView;
             final TextView mTextView;
 
             ViewHolder(View view) {
                 super(view);
                 mView = view;
+                mCardView=view.findViewById(R.id.card_view);
                 mImageView = view.findViewById(R.id.avatar);
                 mTextView = view.findViewById(android.R.id.text1);
+
             }
 
             @Override
@@ -126,6 +130,7 @@ public class CheeseListFragment extends Fragment {
             setAnimation(holder.mView, position);
         }
 
+
         /**
          * Here is the key method to apply the animation
          */
@@ -138,6 +143,12 @@ public class CheeseListFragment extends Fragment {
                 viewToAnimate.startAnimation(animation);
                 lastPosition = position;
             }
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(ViewHolder holder) {
+            holder.mView.clearAnimation();
+            super.onViewDetachedFromWindow(holder);
         }
 
         @Override
