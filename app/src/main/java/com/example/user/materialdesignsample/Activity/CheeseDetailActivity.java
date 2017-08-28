@@ -1,4 +1,4 @@
-package com.example.user.materialdesignsample;
+package com.example.user.materialdesignsample.Activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.user.materialdesignsample.Models.Cheeses;
+import com.example.user.materialdesignsample.R;
 
 public class CheeseDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -148,7 +150,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                myView.setVisibility(View.GONE);
+                myView.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -181,6 +183,17 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
             default:
                 Log.e(TAG, getString(R.string.wrong_case_selection));
                 break;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onBackPressed() {
+        if (mImageViewLarge.getVisibility()==View.VISIBLE){
+            hideReveal();
+        }
+        else{
+            finish();
         }
     }
 }

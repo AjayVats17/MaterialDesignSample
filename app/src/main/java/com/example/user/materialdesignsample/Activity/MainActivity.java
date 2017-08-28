@@ -1,4 +1,4 @@
-package com.example.user.materialdesignsample;
+package com.example.user.materialdesignsample.Activity;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -26,6 +26,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.user.materialdesignsample.Fragment.CheeseListFragment;
+import com.example.user.materialdesignsample.Fragment.CheeseViewFragment;
+import com.example.user.materialdesignsample.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new CheeseListFragment(), "Category 1");
-        adapter.addFragment(new CheeseListFragment(), "Category 2");
+        adapter.addFragment(new CheeseViewFragment(), "Category 2");
         adapter.addFragment(new CheeseListFragment(), "Category 3");
         viewPager.setAdapter(adapter);
     }

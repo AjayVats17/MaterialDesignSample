@@ -1,12 +1,14 @@
-package com.example.user.materialdesignsample;
+package com.example.user.materialdesignsample.Models;
+
+import com.example.user.materialdesignsample.R;
 
 import java.util.Random;
 
 
-class Cheeses {
+public class Cheeses {
     private static final Random RANDOM = new Random();
 
-    static int getRandomCheeseDrawable() {
+    public static int getRandomCheeseDrawable() {
         switch (RANDOM.nextInt(5)) {
             default:
             case 0:
@@ -22,7 +24,7 @@ class Cheeses {
         }
     }
 
-    static final String[] sCheeseStrings = {
+    public static final String[] sCheeseStrings = {
             "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
             "Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale",
             "Aisy Cendre", "Allgauer Emmentaler", "Alverca", "Ambert", "American Cheese",

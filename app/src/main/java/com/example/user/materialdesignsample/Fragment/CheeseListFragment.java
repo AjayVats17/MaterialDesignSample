@@ -1,4 +1,4 @@
-package com.example.user.materialdesignsample;
+package com.example.user.materialdesignsample.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.user.materialdesignsample.Activity.CheeseDetailActivity;
+import com.example.user.materialdesignsample.Models.Cheeses;
+import com.example.user.materialdesignsample.R;
 
 import java.util.ArrayList;
 import java.util.List;
