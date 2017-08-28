@@ -11,6 +11,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,14 +57,18 @@ public class CheeseListFragment extends Fragment {
         return list;
     }
 
-    static class SimpleStringRecyclerViewAdapter
+    class SimpleStringRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder> {
 
         private final TypedValue mTypedValue = new TypedValue();
-//        private int mBackground;
+        //  private int mBackground;
         private List<String> mValues;
 
-        static class ViewHolder extends RecyclerView.ViewHolder {
+        // Allows to remember the last item shown on screen
+        private int lastPosition = -1;
+        private Context context;
+
+        class ViewHolder extends RecyclerView.ViewHolder {
             String mBoundString;
 
             final View mView;
@@ -104,7 +110,7 @@ public class CheeseListFragment extends Fragment {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
+                    context = v.getContext();
                     Intent intent = new Intent(context, CheeseDetailActivity.class);
                     intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
                     context.startActivity(intent);
@@ -115,6 +121,23 @@ public class CheeseListFragment extends Fragment {
                     .load(Cheeses.getRandomCheeseDrawable())
                     .fitCenter()
                     .into(holder.mImageView);
+
+            // Here you apply the animation when the view is bound
+            setAnimation(holder.mView, position);
+        }
+
+        /**
+         * Here is the key method to apply the animation
+         */
+        private void setAnimation(View viewToAnimate, int position)
+        {
+            // If the bound view wasn't previously displayed on screen, it's animated
+            if (position > lastPosition)
+            {
+                Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
+                viewToAnimate.startAnimation(animation);
+                lastPosition = position;
+            }
         }
 
         @Override
