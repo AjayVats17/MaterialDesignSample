@@ -163,10 +163,9 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fab:
-                Intent intent = new Intent("android.intent.action.VIEW");
-                Uri data = Uri.parse("sms:");
-                intent.setData(data);
-                startActivity(intent);
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setData(Uri.parse("sms:"));
+                startActivity(sendIntent);
                 break;
             case R.id.imageView_large:
                 mFab.setVisibility(View.VISIBLE);
