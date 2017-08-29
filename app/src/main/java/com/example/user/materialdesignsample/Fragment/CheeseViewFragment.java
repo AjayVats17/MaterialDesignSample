@@ -12,6 +12,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.user.materialdesignsample.Models.Cheeses;
@@ -71,11 +73,11 @@ public class CheeseViewFragment extends Fragment {
         @Override
         public void onBindViewHolder(final CustomCheeseViewAdapter.ViewHolder holder, int position) {
             holder.imageView.setImageResource(Cheeses.getRandomCheeseDrawable());
+            final Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale);
             holder.imageView.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onClick(View view) {
-                    holder.imageView.getFitsSystemWindows();
+                    holder.imageView.startAnimation(anim);
                 }
             });
         }
