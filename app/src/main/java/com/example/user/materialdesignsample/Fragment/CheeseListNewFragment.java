@@ -7,7 +7,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -126,8 +128,10 @@ public class CheeseListNewFragment extends Fragment {
                     Intent intent=new Intent(mContext, NewCheeseDetailActivity.class);
                     intent.putExtra(NewCheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
                     // For exit Transition
-                    Bundle bundle= ActivityOptions.makeSceneTransitionAnimation(getActivity(),view,view.getTransitionName()).toBundle();
-                    mContext.startActivity(intent,bundle);
+                   /* Bundle bundle= ActivityOptions.makeSceneTransitionAnimation(getActivity(),view,view.getTransitionName()).toBundle();
+                    mContext.startActivity(intent,bundle);*/
+
+                    transitionTo(intent);
 
                 }
             });
@@ -166,5 +170,12 @@ public class CheeseListNewFragment extends Fragment {
         public int getItemCount() {
             return mValues.size();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @SuppressWarnings("unchecked") void transitionTo(Intent i) {
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(getActivity(), true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), pairs);
+        startActivity(i, transitionActivityOptions.toBundle());
     }
 }

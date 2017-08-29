@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -202,7 +203,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
             hideReveal();
         }
         else{
-            finish();
+            finishAfterTransition();
         }
     }
 
@@ -211,6 +212,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         Slide enterTransition = new Slide();
         enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_long));
         enterTransition.setSlideEdge(Gravity.RIGHT);
+        enterTransition.setInterpolator(AnimationUtils.loadInterpolator(this,android.R.interpolator.overshoot));
         return enterTransition;
     }
 }

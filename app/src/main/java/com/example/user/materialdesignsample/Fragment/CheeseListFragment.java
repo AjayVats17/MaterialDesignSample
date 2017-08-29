@@ -20,6 +20,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.user.materialdesignsample.Activity.CheeseDetailActivity;
@@ -85,17 +86,14 @@ public class CheeseListFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             String mBoundString;
-
-            final View mView;
-            final CardView mCardView;
             final ImageView mImageView;
             final TextView mTextView;
+            final CardView mCardView;
 
             ViewHolder(View view) {
                 super(view);
-                mView = view;
                 mCardView=view.findViewById(R.id.card_view);
-                mImageView = view.findViewById(R.id.avatar);
+                mImageView = view.findViewById(R.id.imageView);
                 mTextView = view.findViewById(android.R.id.text1);
 
             }
@@ -125,12 +123,11 @@ public class CheeseListFragment extends Fragment {
             holder.mBoundString = mValues.get(position);
             holder.mTextView.setText(mValues.get(position));
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
+            holder.mCardView.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onClick(View v) {
-                    context = v.getContext();
-                    Intent intent = new Intent(context, CheeseDetailActivity.class);
+                    Intent intent = new Intent(mContext, CheeseDetailActivity.class);
                     intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
                     transitionTo(intent);
                 }
@@ -142,7 +139,7 @@ public class CheeseListFragment extends Fragment {
                     .into(holder.mImageView);
 
             // Here you apply the animation when the view is bound
-            setAnimation(holder.mView, position);
+            setAnimation(holder.mCardView, position);
         }
 
 
@@ -162,7 +159,7 @@ public class CheeseListFragment extends Fragment {
 
         @Override
         public void onViewDetachedFromWindow(ViewHolder holder) {
-            holder.mView.clearAnimation();
+            holder.mTextView.clearAnimation();
             super.onViewDetachedFromWindow(holder);
         }
 

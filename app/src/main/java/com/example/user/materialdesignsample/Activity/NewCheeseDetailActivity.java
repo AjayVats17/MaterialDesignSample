@@ -46,9 +46,9 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_cheese_detail);
 
-        slideTransition();
-
         initUI();
+
+        slideTransition();
 
         loadBackdrop();
     }
@@ -58,9 +58,8 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
     private void slideTransition() {
 
         Slide slide=new Slide(Gravity.BOTTOM);
-        slide.addTarget(R.id.content);
-        slide.setInterpolator(AnimationUtils.loadInterpolator(this,android.R.interpolator.linear_out_slow_in));
-        slide.setDuration(10000);
+        slide.setInterpolator(AnimationUtils.loadInterpolator(this,android.R.interpolator.overshoot));
+        slide.setDuration(getResources().getInteger(R.integer.anim_duration_long));
         getWindow().setEnterTransition(slide);
     }
 
@@ -70,9 +69,6 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
         final String cheeseName = intent.getStringExtra(EXTRA_NAME);
         mImageViewSmall = (ImageView) findViewById(R.id.backdrop);
         mImageViewLarge = (ImageView) findViewById(R.id.imageView_large);
-
-        Button btnOk = (Button) findViewById(R.id.button_ok);
-        btnOk.setOnClickListener(this);
 
         mFab=(FloatingActionButton)findViewById(R.id.fab);
         mFab.setOnClickListener(this);
@@ -210,7 +206,7 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
             hideReveal();
         }
         else{
-            finish();
+            finishAfterTransition();
         }
     }
 
