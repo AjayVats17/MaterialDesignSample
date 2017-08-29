@@ -6,7 +6,7 @@
     android:layout_height="100dp"
     android:layout_margin="5dp"
     android:transitionName="@string/sharedTrans"
-    card_view:cardBackgroundColor="@color/button_pressed"
+    card_view:cardBackgroundColor="@color/colorLight"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="6dp"
     card_view:cardPreventCornerOverlap="true"

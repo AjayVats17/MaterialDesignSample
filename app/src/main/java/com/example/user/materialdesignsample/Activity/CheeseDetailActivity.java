@@ -28,6 +28,9 @@ import com.bumptech.glide.Glide;
 import com.example.user.materialdesignsample.Models.Cheeses;
 import com.example.user.materialdesignsample.R;
 
+/**
+ * @author Shubham Chauhan
+ */
 
 public class CheeseDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,6 +60,10 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         loadBackdrop();
     }
 
+    /**
+     * \Initializing views
+     */
+
     private void initUI() {
 
         Intent intent = getIntent();
@@ -83,6 +90,9 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         mImageViewLarge.setOnClickListener(this);
     }
 
+    /**
+     * Loading images in ImageView
+     */
     private void loadBackdrop() {
         mRandomCheese= Cheeses.getRandomCheeseDrawable();
         Glide.with(this).load(mRandomCheese).centerCrop().into(mImageViewSmall);
@@ -196,6 +206,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
@@ -211,7 +222,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     private Visibility buildEnterTransition() {
         Slide enterTransition = new Slide();
         enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_long));
-        enterTransition.setSlideEdge(Gravity.RIGHT);
+        enterTransition.setSlideEdge(Gravity.END);
         enterTransition.setInterpolator(AnimationUtils.loadInterpolator(this,android.R.interpolator.overshoot));
         return enterTransition;
     }

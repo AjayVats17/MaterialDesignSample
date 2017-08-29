@@ -20,7 +20,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.user.materialdesignsample.Activity.CheeseDetailActivity;
@@ -31,6 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Shubham Chauhan
+ */
 
 public class CheeseListFragment extends Fragment {
 
@@ -82,7 +84,6 @@ public class CheeseListFragment extends Fragment {
 
         // Allows to remember the last item shown on screen
         private int lastPosition = -1;
-        private Context context;
 
         class ViewHolder extends RecyclerView.ViewHolder {
             String mBoundString;

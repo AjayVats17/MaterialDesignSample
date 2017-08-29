@@ -35,6 +35,10 @@ import com.example.user.materialdesignsample.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Shubham Chauhan
+ */
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private CoordinatorLayout mCoordinatorLayout;

@@ -1,6 +1,5 @@
 package com.example.user.materialdesignsample.Fragment;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -54,10 +53,18 @@ public class CheeseListNewFragment extends Fragment {
 
     }
 
+    /**
+     * SetUp Recycler View
+     */
+
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(new CheeseListNewFragment.SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30)));
     }
+
+    /**
+     *Get Random Cheese names
+     */
 
     private List<String> getRandomSublist(String[] array, int amount) {
         ArrayList<String> list = new ArrayList<>(amount);
@@ -68,6 +75,10 @@ public class CheeseListNewFragment extends Fragment {
         return list;
     }
 
+    /**
+     * Adapter for cheese list recycler view
+     */
+
     class SimpleStringRecyclerViewAdapter
             extends RecyclerView.Adapter<CheeseListNewFragment.SimpleStringRecyclerViewAdapter.ViewHolder> {
 
@@ -77,7 +88,6 @@ public class CheeseListNewFragment extends Fragment {
 
         // Allows to remember the last item shown on screen
         private int lastPosition = -1;
-        private Context context;
 
         class ViewHolder extends RecyclerView.ViewHolder {
             String mBoundString;
@@ -149,6 +159,7 @@ public class CheeseListNewFragment extends Fragment {
         /**
          * Here is the key method to apply the animation
          */
+
         private void setAnimation(View viewToAnimate, int position)
         {
             // If the bound view wasn't previously displayed on screen, it's animated
@@ -172,6 +183,9 @@ public class CheeseListNewFragment extends Fragment {
         }
     }
 
+    /**
+     * Transition to enter new Activity
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressWarnings("unchecked") void transitionTo(Intent i) {
         final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(getActivity(), true);

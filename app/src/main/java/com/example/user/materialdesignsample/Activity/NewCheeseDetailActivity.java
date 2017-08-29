@@ -19,13 +19,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.user.materialdesignsample.Models.Cheeses;
 import com.example.user.materialdesignsample.R;
+
+/**
+ * @author Shubham Chauhan
+ */
 
 public class NewCheeseDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,7 +56,11 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
         loadBackdrop();
     }
 
-    /*slide transition for card views content*/
+
+    /**
+     *Slide transition  view
+     */
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void slideTransition() {
 
@@ -62,6 +69,10 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
         slide.setDuration(getResources().getInteger(R.integer.anim_duration_long));
         getWindow().setEnterTransition(slide);
     }
+
+    /**
+     * \Initializing views
+     */
 
     private void initUI() {
 
@@ -85,6 +96,10 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
 
         mImageViewLarge.setOnClickListener(this);
     }
+
+    /**
+     * Loading Images in ImageView
+     */
 
     private void loadBackdrop() {
         mRandomCheese= Cheeses.getRandomCheeseDrawable();

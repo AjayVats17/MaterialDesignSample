@@ -32,6 +32,10 @@ public class CheeseViewFragment extends Fragment {
         return rv;
     }
 
+    /**
+     * Setting up Recycler View with  Staggered Grid Layout Manager
+     */
+
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);
         // set a StaggeredGridLayoutManager with 2 number of columns and vertical orientation
@@ -54,10 +58,14 @@ public class CheeseViewFragment extends Fragment {
 
     }
 
+    /**
+     * Adapter for cheese list recycler view
+     */
+
     private class CustomCheeseViewAdapter extends RecyclerView.Adapter<CustomCheeseViewAdapter.ViewHolder> {
         Context context;
         CustomCheeseViewAdapter(Context mContext) {
-                    this.context=mContext;
+            this.context=mContext;
         }
 
         @Override
@@ -94,10 +102,14 @@ public class CheeseViewFragment extends Fragment {
         }
     }
 
-    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+    /**
+     * Class to provide spaces between grid views
+     */
+
+    private class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private final int mSpace;
 
-        public SpacesItemDecoration(int space) {
+        SpacesItemDecoration(int space) {
             this.mSpace = space;
         }
 
