@@ -31,12 +31,15 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * <h1><font color="orange">CheeseListFragment</font></h1>
+ * Fragment class for showing list of Cheese.
+ *
  * @author Shubham Chauhan
  */
-
 public class CheeseListFragment extends Fragment {
 
     private Context mContext;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,15 +53,21 @@ public class CheeseListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
 
     }
 
+    /**
+     * Method is used to set up RecyclerView
+     */
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30)));
     }
 
+    /**
+     * Method is used to get rendom list of cheese.
+     */
     private List<String> getRandomSublist(String[] array, int amount) {
         ArrayList<String> list = new ArrayList<>(amount);
         Random random = new Random();
@@ -68,21 +77,10 @@ public class CheeseListFragment extends Fragment {
         return list;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @SuppressWarnings("unchecked") void transitionTo(Intent i) {
-        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(getActivity(), true);
-        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), pairs);
-        startActivity(i, transitionActivityOptions.toBundle());
-    }
-
-    class SimpleStringRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder> {
+    class SimpleStringRecyclerViewAdapter extends RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder> {
 
         private final TypedValue mTypedValue = new TypedValue();
-        //  private int mBackground;
         private List<String> mValues;
-
-        // Allows to remember the last item shown on screen
         private int lastPosition = -1;
 
         class ViewHolder extends RecyclerView.ViewHolder {
@@ -93,7 +91,7 @@ public class CheeseListFragment extends Fragment {
 
             ViewHolder(View view) {
                 super(view);
-                mCardView=view.findViewById(R.id.card_view);
+                mCardView = view.findViewById(R.id.card_view);
                 mImageView = view.findViewById(R.id.imageView);
                 mTextView = view.findViewById(android.R.id.text1);
 
@@ -107,15 +105,12 @@ public class CheeseListFragment extends Fragment {
 
         SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-//            mBackground = mTypedValue.resourceId;
             mValues = items;
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item, parent, false);
-//            view.setBackgroundResource(mBackground);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
             return new ViewHolder(view);
         }
 
@@ -138,8 +133,6 @@ public class CheeseListFragment extends Fragment {
                     .load(Cheeses.getRandomCheeseDrawable())
                     .fitCenter()
                     .into(holder.mImageView);
-
-            // Here you apply the animation when the view is bound
             setAnimation(holder.mCardView, position);
         }
 
@@ -147,11 +140,8 @@ public class CheeseListFragment extends Fragment {
         /**
          * Here is the key method to apply the animation
          */
-        private void setAnimation(View viewToAnimate, int position)
-        {
-            // If the bound view wasn't previously displayed on screen, it's animated
-            if (position > lastPosition)
-            {
+        private void setAnimation(View viewToAnimate, int position) {
+            if (position > lastPosition) {
                 Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
                 viewToAnimate.startAnimation(animation);
                 lastPosition = position;
@@ -168,5 +158,16 @@ public class CheeseListFragment extends Fragment {
         public int getItemCount() {
             return mValues.size();
         }
+    }
+
+    /**
+     * Transition to enter new Activity
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @SuppressWarnings("unchecked")
+    void transitionTo(Intent i) {
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(getActivity(), true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), pairs);
+        startActivity(i, transitionActivityOptions.toBundle());
     }
 }

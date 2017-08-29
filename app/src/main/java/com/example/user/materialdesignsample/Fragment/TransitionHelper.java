@@ -29,7 +29,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * <h1><font color="orange">TransitionHelper</font></h1>
  * Helper class for creating content transitions used with {@link android.app.ActivityOptions}.
+ *
+ * @author Shubham Chauhan
  */
 class TransitionHelper {
 
@@ -37,9 +40,9 @@ class TransitionHelper {
      * Create the transition participants required during a activity transition while
      * avoiding glitches with the system UI.
      *
-     * @param activity The activity used as start for the transition.
+     * @param activity         The activity used as start for the transition.
      * @param includeStatusBar If false, the status bar will not be added as the transition
-     *        participant.
+     *                         participant.
      * @return All transition participants.
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -58,6 +61,7 @@ class TransitionHelper {
         List<Pair> participants = new ArrayList<>(3);
         addNonNullViewToTransitionParticipants(statusBar, participants);
         addNonNullViewToTransitionParticipants(navBar, participants);
+
         // only add transition participants if there's at least one none-null element
         if (otherParticipants != null && !(otherParticipants.length == 1
                 && otherParticipants[0] == null)) {

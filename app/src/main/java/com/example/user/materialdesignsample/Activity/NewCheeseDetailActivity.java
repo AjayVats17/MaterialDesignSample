@@ -27,20 +27,18 @@ import com.example.user.materialdesignsample.Models.Cheeses;
 import com.example.user.materialdesignsample.R;
 
 /**
- * @author Shubham Chauhan
+ * <h1><font color="orange">NewCheeseDetailActivity</font></h1>
+ * Activity class for showing details about Cheese with animation.
+ *
+ * @author Divya Khanduri
  */
-
 public class NewCheeseDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = NewCheeseDetailActivity.class.getSimpleName();
-
     public static final String EXTRA_NAME = "cheese_name";
-
     private ImageView mImageViewSmall;
     private ImageView mImageViewLarge;
-
     private FloatingActionButton mFab;
-
     private int mRandomCheese;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -50,59 +48,50 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_new_cheese_detail);
 
         initUI();
-
         slideTransition();
-
         loadBackdrop();
     }
 
 
     /**
-     *Slide transition  view
+     * Method is used to show Slide transition view
      */
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void slideTransition() {
-
-        Slide slide=new Slide(Gravity.BOTTOM);
-        slide.setInterpolator(AnimationUtils.loadInterpolator(this,android.R.interpolator.overshoot));
+        Slide slide = new Slide(Gravity.BOTTOM);
+        slide.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.overshoot));
         slide.setDuration(getResources().getInteger(R.integer.anim_duration_long));
         getWindow().setEnterTransition(slide);
     }
 
     /**
-     * \Initializing views
+     *  Method is used to initializing views
      */
-
     private void initUI() {
 
         Intent intent = getIntent();
         final String cheeseName = intent.getStringExtra(EXTRA_NAME);
         mImageViewSmall = (ImageView) findViewById(R.id.backdrop);
         mImageViewLarge = (ImageView) findViewById(R.id.imageView_large);
-
-        mFab=(FloatingActionButton)findViewById(R.id.fab);
-        mFab.setOnClickListener(this);
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(cheeseName);
 
+        mFab.setOnClickListener(this);
         mImageViewSmall.setOnClickListener(this);
-
         mImageViewLarge.setOnClickListener(this);
     }
 
     /**
-     * Loading Images in ImageView
+     * Method is used to loading Images in ImageView
      */
-
     private void loadBackdrop() {
-        mRandomCheese= Cheeses.getRandomCheeseDrawable();
+        mRandomCheese = Cheeses.getRandomCheeseDrawable();
         Glide.with(this).load(mRandomCheese).centerCrop().into(mImageViewSmall);
     }
 
@@ -115,7 +104,7 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.isChecked()){
+        if (item.isChecked()) {
             item.setChecked(false);
         }
         switch (item.getItemId()) {
@@ -129,7 +118,7 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
 
             case R.id.about:
                 item.setChecked(true);
-                Toast.makeText(NewCheeseDetailActivity.this, android.os.Build.MODEL,Toast.LENGTH_LONG).show();
+                Toast.makeText(NewCheeseDetailActivity.this, android.os.Build.MODEL, Toast.LENGTH_LONG).show();
                 break;
 
             default:
@@ -143,18 +132,11 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
     void showReveal() {
         View myView = findViewById(R.id.imageView_large);
 
-        // get the center for the clipping circle
         int cx = myView.getWidth();
         int cy = myView.getHeight();
-
-        // get the final radius for the clipping circle
         float finalRadius = (float) Math.hypot(cx, cy);
 
-        // create the animator for this view (the start radius is zero)
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
-
-        // make the view visible and start the animation
+        Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
         myView.setVisibility(View.VISIBLE);
         anim.start();
     }
@@ -163,18 +145,11 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
     void hideReveal() {
         final View myView = findViewById(R.id.imageView_large);
 
-        // get the center for the clipping circle
         int cx = myView.getWidth();
         int cy = myView.getHeight();
-
-        // get the initial radius for the clipping circle
         float initialRadius = (float) Math.hypot(cx, cy);
 
-        // create the animation (the final radius is zero)
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
-
-        // make the view invisible when the animation is done
+        Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -182,8 +157,6 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
                 myView.setVisibility(View.INVISIBLE);
             }
         });
-
-        // start the animation
         anim.start();
 
 
@@ -192,7 +165,7 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.fab:
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
                 sendIntent.setData(Uri.parse("sms:"));
@@ -214,13 +187,13 @@ public class NewCheeseDetailActivity extends AppCompatActivity implements View.O
                 break;
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
-        if (mImageViewLarge.getVisibility()==View.VISIBLE){
+        if (mImageViewLarge.getVisibility() == View.VISIBLE) {
             hideReveal();
-        }
-        else{
+        } else {
             finishAfterTransition();
         }
     }

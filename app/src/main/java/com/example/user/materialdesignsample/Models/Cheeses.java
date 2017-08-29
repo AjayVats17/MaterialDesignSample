@@ -4,7 +4,12 @@ import com.example.user.materialdesignsample.R;
 
 import java.util.Random;
 
-
+/**
+ * <h1><font color="orange">Cheeses</font></h1>
+ * Model class for Cheese details.
+ *
+ * @author Divya Khanduri
+ */
 public class Cheeses {
     private static final Random RANDOM = new Random();
 

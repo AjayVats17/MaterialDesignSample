@@ -29,20 +29,19 @@ import com.example.user.materialdesignsample.Models.Cheeses;
 import com.example.user.materialdesignsample.R;
 
 /**
+ * <h1><font color="orange">CheeseDetailActivity</font></h1>
+ * Activity class for showing details about Cheese with animation.
+ *
  * @author Shubham Chauhan
  */
-
 public class CheeseDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = CheeseDetailActivity.class.getSimpleName();
-
     public static final String EXTRA_NAME = "cheese_name";
 
     private ImageView mImageViewSmall;
     private ImageView mImageViewLarge;
-
     private FloatingActionButton mFab;
-
     private int mRandomCheese;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -51,50 +50,41 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheese_detail);
 
-        // set an exit transition
         Visibility transition = buildEnterTransition();
         getWindow().setEnterTransition(transition);
-
         initUI();
-
         loadBackdrop();
     }
 
     /**
-     * \Initializing views
+     *  Method is used to Initializing views
      */
-
     private void initUI() {
 
         Intent intent = getIntent();
         final String cheeseName = intent.getStringExtra(EXTRA_NAME);
         mImageViewSmall = (ImageView) findViewById(R.id.backdrop);
         mImageViewLarge = (ImageView) findViewById(R.id.imageView_large);
-
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
         Button btnOk = (Button) findViewById(R.id.button_ok);
-        btnOk.setOnClickListener(this);
-
-        mFab=(FloatingActionButton)findViewById(R.id.fab);
-        mFab.setOnClickListener(this);
-
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(cheeseName);
 
         mImageViewSmall.setOnClickListener(this);
-
+        btnOk.setOnClickListener(this);
+        mFab.setOnClickListener(this);
         mImageViewLarge.setOnClickListener(this);
     }
 
     /**
-     * Loading images in ImageView
+     * Method is used to loading images in ImageView
      */
     private void loadBackdrop() {
-        mRandomCheese= Cheeses.getRandomCheeseDrawable();
+        mRandomCheese = Cheeses.getRandomCheeseDrawable();
         Glide.with(this).load(mRandomCheese).centerCrop().into(mImageViewSmall);
     }
 
@@ -107,7 +97,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.isChecked()){
+        if (item.isChecked()) {
             item.setChecked(false);
         }
         switch (item.getItemId()) {
@@ -118,12 +108,10 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
                 item.setChecked(true);
                 startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
                 break;
-
             case R.id.about:
                 item.setChecked(true);
-                Toast.makeText(CheeseDetailActivity.this, android.os.Build.MODEL,Toast.LENGTH_LONG).show();
+                Toast.makeText(CheeseDetailActivity.this, android.os.Build.MODEL, Toast.LENGTH_LONG).show();
                 break;
-
             default:
                 Log.e(TAG, getString(R.string.wrong_case_selection));
                 break;
@@ -135,18 +123,11 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     void showReveal() {
         View myView = findViewById(R.id.imageView_large);
 
-     // get the center for the clipping circle
         int cx = myView.getWidth();
         int cy = myView.getHeight();
-
-     // get the final radius for the clipping circle
         float finalRadius = (float) Math.hypot(cx, cy);
 
-     // create the animator for this view (the start radius is zero)
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
-
-     // make the view visible and start the animation
+        Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
         myView.setVisibility(View.VISIBLE);
         anim.start();
     }
@@ -154,19 +135,11 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     void hideReveal() {
         final View myView = findViewById(R.id.imageView_large);
-
-     // get the center for the clipping circle
         int cx = myView.getWidth();
         int cy = myView.getHeight();
-
-     // get the initial radius for the clipping circle
         float initialRadius = (float) Math.hypot(cx, cy);
 
-     // create the animation (the final radius is zero)
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
-
-     // make the view invisible when the animation is done
+        Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -174,17 +147,13 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
                 myView.setVisibility(View.INVISIBLE);
             }
         });
-
-     // start the animation
         anim.start();
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.fab:
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
                 sendIntent.setData(Uri.parse("sms:"));
@@ -210,10 +179,9 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
-        if (mImageViewLarge.getVisibility()==View.VISIBLE){
+        if (mImageViewLarge.getVisibility() == View.VISIBLE) {
             hideReveal();
-        }
-        else{
+        } else {
             finishAfterTransition();
         }
     }
@@ -223,7 +191,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         Slide enterTransition = new Slide();
         enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_long));
         enterTransition.setSlideEdge(Gravity.END);
-        enterTransition.setInterpolator(AnimationUtils.loadInterpolator(this,android.R.interpolator.overshoot));
+        enterTransition.setInterpolator(AnimationUtils.loadInterpolator(this, android.R.interpolator.overshoot));
         return enterTransition;
     }
 }

@@ -18,34 +18,34 @@ import com.example.user.materialdesignsample.Models.Cheeses;
 import com.example.user.materialdesignsample.R;
 
 /**
- * @author Divya Khanduri.
+ * <h1><font color="orange">CheeseViewFragment</font></h1>
+ * Fragment class for showing list of Cheese Images.
+ *
+ * @author Divya Khanduri
  */
-
 public class CheeseViewFragment extends Fragment {
     private Context mContext;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_cheese_view, container, false);
-        setupRecyclerView(rv);
-        return rv;
+        RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_cheese_view, container, false);
+        setupRecyclerView(recyclerView);
+        return recyclerView;
     }
 
     /**
      * Setting up Recycler View with  Staggered Grid Layout Manager
      */
-
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);
-        // set a StaggeredGridLayoutManager with 2 number of columns and vertical orientation
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        // set LayoutManager to RecyclerView
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        //  call the constructor of CustomAdapter to send the reference and data to Adapter
+
         CustomCheeseViewAdapter customCheeseViewAdapter = new CustomCheeseViewAdapter(mContext);
-        recyclerView.setAdapter(customCheeseViewAdapter); // set the Adapter to RecyclerView
+        recyclerView.setAdapter(customCheeseViewAdapter);
+
         SpacesItemDecoration decoration = new SpacesItemDecoration(16);
         recyclerView.addItemDecoration(decoration);
     }
@@ -54,18 +54,18 @@ public class CheeseViewFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
 
     }
 
     /**
      * Adapter for cheese list recycler view
      */
-
     private class CustomCheeseViewAdapter extends RecyclerView.Adapter<CustomCheeseViewAdapter.ViewHolder> {
         Context context;
+
         CustomCheeseViewAdapter(Context mContext) {
-            this.context=mContext;
+            this.context = mContext;
         }
 
         @Override
@@ -95,6 +95,7 @@ public class CheeseViewFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             ImageView imageView;
+
             ViewHolder(View itemView) {
                 super(itemView);
                 imageView = itemView.findViewById(R.id.iv_cheese);
@@ -105,7 +106,6 @@ public class CheeseViewFragment extends Fragment {
     /**
      * Class to provide spaces between grid views
      */
-
     private class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private final int mSpace;
 
@@ -119,7 +119,6 @@ public class CheeseViewFragment extends Fragment {
             outRect.right = mSpace;
             outRect.bottom = mSpace;
 
-            // Add top margin only for the first item to avoid double space between items
             if (parent.getChildAdapterPosition(view) == 0)
                 outRect.top = mSpace;
         }

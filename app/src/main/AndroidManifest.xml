@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.CheeseDetailActivity" />
-        <activity android:name=".Activity.NewCheeseDetailActivity"></activity>
+        <activity android:name=".Activity.NewCheeseDetailActivity" />
     </application>
 
 </manifest>

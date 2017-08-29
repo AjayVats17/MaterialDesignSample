@@ -31,11 +31,14 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * <h1><font color="orange">CheeseListNewFragment</font></h1>
+ * Fragment class for showing list of Cheese.
+ *
  * @author Divya Khanduri
  */
-
 public class CheeseListNewFragment extends Fragment {
     private Context mContext;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,23 +52,21 @@ public class CheeseListNewFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
 
     }
 
     /**
-     * SetUp Recycler View
+     * Method is used to setUp Recycler View
      */
-
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(new CheeseListNewFragment.SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30)));
     }
 
     /**
-     *Get Random Cheese names
+     * method is used to get Random Cheese names
      */
-
     private List<String> getRandomSublist(String[] array, int amount) {
         ArrayList<String> list = new ArrayList<>(amount);
         Random random = new Random();
@@ -78,29 +79,22 @@ public class CheeseListNewFragment extends Fragment {
     /**
      * Adapter for cheese list recycler view
      */
-
     class SimpleStringRecyclerViewAdapter
             extends RecyclerView.Adapter<CheeseListNewFragment.SimpleStringRecyclerViewAdapter.ViewHolder> {
 
         private final TypedValue mTypedValue = new TypedValue();
-        //  private int mBackground;
         private List<String> mValues;
-
-        // Allows to remember the last item shown on screen
         private int lastPosition = -1;
 
         class ViewHolder extends RecyclerView.ViewHolder {
             String mBoundString;
-
-            final View mView;
             final CardView mCardView;
             final ImageView mImageView;
             final TextView mTextView;
 
             ViewHolder(View view) {
                 super(view);
-                mView = view;
-                mCardView=view.findViewById(R.id.card_view);
+                mCardView = view.findViewById(R.id.card_view);
                 mImageView = view.findViewById(R.id.avatar);
                 mTextView = view.findViewById(android.R.id.text1);
 
@@ -114,15 +108,12 @@ public class CheeseListNewFragment extends Fragment {
 
         SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-//            mBackground = mTypedValue.resourceId;
             mValues = items;
         }
 
         @Override
         public CheeseListNewFragment.SimpleStringRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cheese_list_row_new, parent, false);
-//            view.setBackgroundResource(mBackground);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cheese_list_row_new, parent, false);
             return new CheeseListNewFragment.SimpleStringRecyclerViewAdapter.ViewHolder(view);
         }
 
@@ -131,18 +122,13 @@ public class CheeseListNewFragment extends Fragment {
             holder.mBoundString = mValues.get(position);
             holder.mTextView.setText(mValues.get(position));
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
+            holder.mCardView.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(mContext, NewCheeseDetailActivity.class);
+                    Intent intent = new Intent(mContext, NewCheeseDetailActivity.class);
                     intent.putExtra(NewCheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
-                    // For exit Transition
-                   /* Bundle bundle= ActivityOptions.makeSceneTransitionAnimation(getActivity(),view,view.getTransitionName()).toBundle();
-                    mContext.startActivity(intent,bundle);*/
-
                     transitionTo(intent);
-
                 }
             });
 
@@ -150,21 +136,15 @@ public class CheeseListNewFragment extends Fragment {
                     .load(Cheeses.getRandomCheeseDrawable())
                     .fitCenter()
                     .into(holder.mImageView);
-
-            // Here you apply the animation when the view is bound
-            setAnimation(holder.mView, position);
+            setAnimation(holder.mCardView, position);
         }
 
 
         /**
          * Here is the key method to apply the animation
          */
-
-        private void setAnimation(View viewToAnimate, int position)
-        {
-            // If the bound view wasn't previously displayed on screen, it's animated
-            if (position > lastPosition)
-            {
+        private void setAnimation(View viewToAnimate, int position) {
+            if (position > lastPosition) {
                 Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
                 viewToAnimate.startAnimation(animation);
                 lastPosition = position;
@@ -173,7 +153,7 @@ public class CheeseListNewFragment extends Fragment {
 
         @Override
         public void onViewDetachedFromWindow(CheeseListNewFragment.SimpleStringRecyclerViewAdapter.ViewHolder holder) {
-            holder.mView.clearAnimation();
+            holder.mCardView.clearAnimation();
             super.onViewDetachedFromWindow(holder);
         }
 
@@ -187,7 +167,8 @@ public class CheeseListNewFragment extends Fragment {
      * Transition to enter new Activity
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @SuppressWarnings("unchecked") void transitionTo(Intent i) {
+    @SuppressWarnings("unchecked")
+    void transitionTo(Intent i) {
         final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(getActivity(), true);
         ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), pairs);
         startActivity(i, transitionActivityOptions.toBundle());

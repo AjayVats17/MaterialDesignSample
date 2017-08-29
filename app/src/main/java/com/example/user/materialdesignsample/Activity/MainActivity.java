@@ -36,27 +36,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <h1><font color="orange">MainActivity</font></h1>
+ * Activity class for loading fragment with viewPager and tabLayout (CheeseListFragment,CheeseViewFragment,CheeseListNewFragment).
+ *
  * @author Shubham Chauhan
  */
-
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private CoordinatorLayout mCoordinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initUI();
-
     }
 
     /**
-     * Initializing Views
+     * Method is used to initializing Views
      */
-
     private void initUI() {
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mCoordinatorLayout=(CoordinatorLayout)findViewById(R.id.main_content);
-
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_content);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -92,13 +91,11 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     /**
-     * Setting up View Pager
+     * Method is used to setting up View Pager
      */
-
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new CheeseListFragment(), "Category 1");
@@ -108,14 +105,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Setting up Drawer Content
+     * Method is used to setting up Drawer Content
      */
-
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                if (menuItem.isChecked()){
+                if (menuItem.isChecked()) {
                     menuItem.setChecked(false);
                 }
                 menuItem.setChecked(true);
@@ -125,38 +121,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-      /*
-     *    Shows a Custom Snackbar
+    /**
+     * this method simply Shows a Custom Snackbar
      */
-
     private void showCustomSnackbar() {
-        // Create the Snackbar
         Snackbar snackbar = Snackbar.make(mCoordinatorLayout, "", Snackbar.LENGTH_LONG);
-        // Get the Snackbar's layout view
         Snackbar.SnackbarLayout layout = (Snackbar.SnackbarLayout) snackbar.getView();
-        // Hide the text
         TextView textView = layout.findViewById(android.support.design.R.id.snackbar_text);
         textView.setVisibility(View.INVISIBLE);
-        // Inflate our custom view
+
         View snackView = View.inflate(this, R.layout.my_custom_snackbar, null);
-        // Configure the view
         ImageView imageView = snackView.findViewById(R.id.iv_background);
         Bitmap image = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         imageView.setImageBitmap(image);
+
         TextView textViewTop = snackView.findViewById(R.id.tv_snackbar);
         textViewTop.setText(getString(R.string.have_a_bite));
         textViewTop.setTextColor(Color.BLACK);
 
-        // Add the view to the Snackbar's layout
         layout.addView(snackView, 0);
-
     /*    // Change the position of snackbar
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)layout.getLayoutParams();
         params.gravity = Gravity.TOP;
         layout.setLayoutParams(params);*/
-
-
-        // Show the Snackbar
         snackbar.show();
     }
 
@@ -212,9 +199,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * this method is used for set mode (day,night etc)
+     */
     private void setNightMode(@AppCompatDelegate.NightMode int nightMode) {
         AppCompatDelegate.setDefaultNightMode(nightMode);
-
         if (Build.VERSION.SDK_INT >= 15) {
             recreate();
         }
