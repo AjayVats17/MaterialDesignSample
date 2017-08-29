@@ -12,13 +12,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
-import android.transition.Visibility;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -27,10 +27,9 @@ import com.bumptech.glide.Glide;
 import com.example.user.materialdesignsample.Models.Cheeses;
 import com.example.user.materialdesignsample.R;
 
+public class NewCheeseDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class CheeseDetailActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private String TAG = CheeseDetailActivity.class.getSimpleName();
+    private String TAG = NewCheeseDetailActivity.class.getSimpleName();
 
     public static final String EXTRA_NAME = "cheese_name";
 
@@ -45,15 +44,24 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cheese_detail);
+        setContentView(R.layout.activity_new_cheese_detail);
 
-        // set an exit transition
-        Visibility transition = buildEnterTransition();
-        getWindow().setEnterTransition(transition);
+        slideTransition();
 
         initUI();
 
         loadBackdrop();
+    }
+
+    /*slide transition for card views content*/
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void slideTransition() {
+
+        Slide slide=new Slide(Gravity.BOTTOM);
+        slide.addTarget(R.id.content);
+        slide.setInterpolator(AnimationUtils.loadInterpolator(this,android.R.interpolator.linear_out_slow_in));
+        slide.setDuration(10000);
+        getWindow().setEnterTransition(slide);
     }
 
     private void initUI() {
@@ -110,7 +118,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.about:
                 item.setChecked(true);
-                Toast.makeText(CheeseDetailActivity.this, android.os.Build.MODEL,Toast.LENGTH_LONG).show();
+                Toast.makeText(NewCheeseDetailActivity.this, android.os.Build.MODEL,Toast.LENGTH_LONG).show();
                 break;
 
             default:
@@ -124,18 +132,18 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     void showReveal() {
         View myView = findViewById(R.id.imageView_large);
 
-     // get the center for the clipping circle
+        // get the center for the clipping circle
         int cx = myView.getWidth();
         int cy = myView.getHeight();
 
-     // get the final radius for the clipping circle
+        // get the final radius for the clipping circle
         float finalRadius = (float) Math.hypot(cx, cy);
 
-     // create the animator for this view (the start radius is zero)
+        // create the animator for this view (the start radius is zero)
         Animator anim =
                 ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
 
-     // make the view visible and start the animation
+        // make the view visible and start the animation
         myView.setVisibility(View.VISIBLE);
         anim.start();
     }
@@ -144,18 +152,18 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
     void hideReveal() {
         final View myView = findViewById(R.id.imageView_large);
 
-     // get the center for the clipping circle
+        // get the center for the clipping circle
         int cx = myView.getWidth();
         int cy = myView.getHeight();
 
-     // get the initial radius for the clipping circle
+        // get the initial radius for the clipping circle
         float initialRadius = (float) Math.hypot(cx, cy);
 
-     // create the animation (the final radius is zero)
+        // create the animation (the final radius is zero)
         Animator anim =
                 ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
 
-     // make the view invisible when the animation is done
+        // make the view invisible when the animation is done
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -164,7 +172,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
-     // start the animation
+        // start the animation
         anim.start();
 
 
@@ -184,7 +192,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
                 hideReveal();
                 break;
             case R.id.backdrop:
-                Glide.with(CheeseDetailActivity.this).load(mRandomCheese).centerCrop().into(mImageViewLarge);
+                Glide.with(NewCheeseDetailActivity.this).load(mRandomCheese).centerCrop().into(mImageViewLarge);
                 mFab.setVisibility(View.GONE);
                 showReveal();
                 break;
@@ -206,11 +214,4 @@ public class CheeseDetailActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private Visibility buildEnterTransition() {
-        Slide enterTransition = new Slide();
-        enterTransition.setDuration(getResources().getInteger(R.integer.anim_duration_long));
-        enterTransition.setSlideEdge(Gravity.RIGHT);
-        return enterTransition;
-    }
 }

@@ -42,4 +42,13 @@
         </item>
     </style>
 
+
+    <style name="AppTheme.Home">
+        <!-- enable window content transitions -->
+        <item name="android:windowExitTransition" >@transition/grid_exit
+        </item>
+        <item name="android:windowReenterTransition">@android:transition/slide_top</item>
+
+    </style>
+
 </resources>

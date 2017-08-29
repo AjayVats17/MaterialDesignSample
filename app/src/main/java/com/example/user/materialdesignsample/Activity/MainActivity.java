@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.user.materialdesignsample.Fragment.CheeseListFragment;
+import com.example.user.materialdesignsample.Fragment.CheeseListNewFragment;
 import com.example.user.materialdesignsample.Fragment.CheeseViewFragment;
 import com.example.user.materialdesignsample.R;
 
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new CheeseListFragment(), "Category 1");
         adapter.addFragment(new CheeseViewFragment(), "Category 2");
-        adapter.addFragment(new CheeseListFragment(), "Category 3");
+        adapter.addFragment(new CheeseListNewFragment(), "Category 3");
         viewPager.setAdapter(adapter);
     }
 

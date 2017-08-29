@@ -40,6 +40,14 @@
         <item name="colorPrimaryDark">#CC0c1e37</item>
         <item name="colorAccent">#303F9F</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowContentTransitions">true</item>
+
+    </style>
+
+    <style name="AppTheme.Home">
+        <!-- enable window content transitions -->
+        <item name="android:windowExitTransition" tools:targetApi="lollipop">@transition/grid_exit</item>
+        <item name="android:windowReenterTransition" tools:targetApi="lollipop">@android:transition/slide_top</item>
 
     </style>
 
