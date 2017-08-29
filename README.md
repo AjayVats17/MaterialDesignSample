@@ -1,4 +1,4 @@
-Poly Line draw on Google Map Sample
+Material Design Topics Sample
 ===================================
 
 >This project is a sample for Matrial Design:
