@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,16 +41,28 @@ import java.util.Random;
 public class CheeseListFragment extends Fragment {
 
     private Context mContext;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private SimpleStringRecyclerViewAdapter mSimpleStringRecyclerViewAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_cheese_list, container, false);
-        setupRecyclerView(rv);
-        return rv;
-    }
+        View view = inflater.inflate(R.layout.fragment_cheese_list, container, false);
 
+        RecyclerView mRecyclerView = view.findViewById(R.id.recyclerview);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mSimpleStringRecyclerViewAdapter=new SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30));
+        mRecyclerView.setAdapter(mSimpleStringRecyclerViewAdapter);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshContent();
+            }
+        });
+        return view;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -58,11 +72,17 @@ public class CheeseListFragment extends Fragment {
     }
 
     /**
-     * Method is used to set up RecyclerView
+     * Method is used to refresh the contents.
      */
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30)));
+    void refreshContent(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSimpleStringRecyclerViewAdapter.setmValues(getRandomSublist(Cheeses.sCheeseStrings, 30));
+                mSimpleStringRecyclerViewAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        },1000);
     }
 
     /**
@@ -82,6 +102,10 @@ public class CheeseListFragment extends Fragment {
         private final TypedValue mTypedValue = new TypedValue();
         private List<String> mValues;
         private int lastPosition = -1;
+
+        public void setmValues(List<String> mValues) {
+            this.mValues = mValues;
+        }
 
         class ViewHolder extends RecyclerView.ViewHolder {
             String mBoundString;
