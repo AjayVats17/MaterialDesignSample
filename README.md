@@ -12,6 +12,7 @@ Material Design Topics Sample
 - Reveal animation
 - Custom Snack Bar
 - Tab Layout
+- Swipe Refresh
 - Other Simple Animation
 
 
