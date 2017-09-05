@@ -50,7 +50,6 @@ public class CheeseListFragment extends Fragment {
     private Context mContext;
     private ImageView mExpandedImageView;
     private View mView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     private SimpleStringRecyclerViewAdapter mSimpleStringRecyclerViewAdapter;
 
 
@@ -62,19 +61,12 @@ public class CheeseListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_cheese_list, container, false);
-        mExpandedImageView = (ImageView) mView.findViewById(R.id.expanded_image);
+        mExpandedImageView = mView.findViewById(R.id.expanded_image);
         RecyclerView mRecyclerView = mView.findViewById(R.id.recyclerview);
-        mSwipeRefreshLayout = mView.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mSimpleStringRecyclerViewAdapter=new SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30));
         mRecyclerView.setAdapter(mSimpleStringRecyclerViewAdapter);
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshContent();
-            }
-        });
         return mView;
     }
 
@@ -84,21 +76,6 @@ public class CheeseListFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
 
-    }
-
-
-    /**
-     * Method is used to refresh the contents.
-     */
-    void refreshContent(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSimpleStringRecyclerViewAdapter.setmValues(getRandomSublist(Cheeses.sCheeseStrings, 30));
-                mSimpleStringRecyclerViewAdapter.notifyDataSetChanged();
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        },1000);
     }
 
     /**
@@ -159,7 +136,7 @@ public class CheeseListFragment extends Fragment {
             holder.mTextView.setText(mValues.get(position));
             final int imageId=Cheeses.getRandomCheeseDrawable();
 
-            holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            holder.mTextView.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onClick(View v) {
@@ -177,7 +154,7 @@ public class CheeseListFragment extends Fragment {
             });
 
             Glide.with(holder.mImageView.getContext())
-                    .load(Cheeses.getRandomCheeseDrawable())
+                    .load(imageId)
                     .fitCenter()
                     .into(holder.mImageView);
             setAnimation(holder.mCardView, position);
@@ -240,7 +217,7 @@ public class CheeseListFragment extends Fragment {
         // bounds, since that's the origin for the positioning animation
         // properties (X, Y).
         thumbView.getGlobalVisibleRect(startBounds);
-        mView.findViewById(R.id.container).getGlobalVisibleRect(finalBounds, globalOffset);
+        mView.findViewById(R.id.swipe_refresh_layout).getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);
 

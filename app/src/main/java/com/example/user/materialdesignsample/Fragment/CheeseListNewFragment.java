@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,14 +40,26 @@ import java.util.Random;
  */
 public class CheeseListNewFragment extends Fragment {
     private Context mContext;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private SimpleStringRecyclerViewAdapter mSimpleStringRecyclerViewAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_cheese_list_new, container, false);
-        setupRecyclerView(rv);
-        return rv;
+        View view = inflater.inflate(R.layout.fragment_cheese_list_new, container, false);
+        mSwipeRefreshLayout=view.findViewById(R.id.swipe_refresh_layout);
+        RecyclerView mRecyclerView = view.findViewById(R.id.recyclerview);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mSimpleStringRecyclerViewAdapter=new CheeseListNewFragment.SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30));
+        mRecyclerView.setAdapter(mSimpleStringRecyclerViewAdapter);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshContent();
+            }
+        });
+        return view;
     }
 
 
@@ -54,6 +68,20 @@ public class CheeseListNewFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
 
+    }
+
+    /**
+     * Method is used to refresh the contents.
+     */
+    void refreshContent(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSimpleStringRecyclerViewAdapter.setmValues(getRandomSublist(Cheeses.sCheeseStrings, 30));
+                mSimpleStringRecyclerViewAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        },1000);
     }
 
     /**
@@ -85,6 +113,10 @@ public class CheeseListNewFragment extends Fragment {
         private final TypedValue mTypedValue = new TypedValue();
         private List<String> mValues;
         private int lastPosition = -1;
+
+        public void setmValues(List<String> mValues) {
+            this.mValues = mValues;
+        }
 
         class ViewHolder extends RecyclerView.ViewHolder {
             String mBoundString;
