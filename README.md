@@ -8,11 +8,12 @@ Material Design Topics Sample
 - Collapsing Toolbar
 - Co-ordinate layout
 - Slide Transition
-- Ripple effect
-- Reveal animation
+- Ripple Effect
+- Reveal Animation
 - Custom Snack Bar
 - Tab Layout
 - Swipe Refresh
+- Zoom In Zoom Out Animation
 - Other Simple Animation
 
 
