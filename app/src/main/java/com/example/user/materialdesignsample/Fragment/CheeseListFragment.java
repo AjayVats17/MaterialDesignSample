@@ -10,13 +10,11 @@ import android.graphics.Rect;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,7 +48,6 @@ public class CheeseListFragment extends Fragment {
     private Context mContext;
     private ImageView mExpandedImageView;
     private View mView;
-    private SimpleStringRecyclerViewAdapter mSimpleStringRecyclerViewAdapter;
 
 
     private Animator mCurrentAnimator;
@@ -64,7 +61,7 @@ public class CheeseListFragment extends Fragment {
         mExpandedImageView = mView.findViewById(R.id.expanded_image);
         RecyclerView mRecyclerView = mView.findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mSimpleStringRecyclerViewAdapter=new SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30));
+        SimpleStringRecyclerViewAdapter mSimpleStringRecyclerViewAdapter = new SimpleStringRecyclerViewAdapter(mContext, getRandomSublist(Cheeses.sCheeseStrings, 30));
         mRecyclerView.setAdapter(mSimpleStringRecyclerViewAdapter);
 
         return mView;
@@ -96,9 +93,6 @@ public class CheeseListFragment extends Fragment {
         private List<String> mValues;
         private int lastPosition = -1;
 
-        public void setmValues(List<String> mValues) {
-            this.mValues = mValues;
-        }
         class ViewHolder extends RecyclerView.ViewHolder {
             String mBoundString;
             final ImageView mImageView;
