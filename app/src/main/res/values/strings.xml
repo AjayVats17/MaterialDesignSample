@@ -49,6 +49,9 @@
     <string name="friends">Friends</string>
     <string name="ok">ok</string>
     <string name="material_design">Material Design</string>
+    <string name="persistent_bottomsheet">Persistent Bottomsheet</string>
+    <string name="hiii_this_is_a_persistent_bottomshee">Hiii....this is a persistent bottomsheet. Swipe it down to close it</string>
+    <string name="background_picture">Background picture</string>
 
 
 </resources>

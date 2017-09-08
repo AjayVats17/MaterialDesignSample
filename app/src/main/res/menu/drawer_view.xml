@@ -38,11 +38,13 @@
     <item android:title="Sub items">
         <menu>
             <item
+                android:id="@+id/persistent_bottomsheet"
                 android:icon="@drawable/ic_dashboard"
-                android:title="Sub item 1" />
+                android:title="Persistent Bottomsheet" />
             <item
+                android:id="@+id/model_bottomsheet"
                 android:icon="@drawable/ic_forum"
-                android:title="Sub item 2" />
+                android:title="Model Bottomsheet" />
         </menu>
     </item>
 
